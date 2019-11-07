@@ -77,9 +77,9 @@ public void test1() throws Exception{
 }
 ```
 
-![](image/1.png)
+![](image/2-1.png)
 
-![](image/2.png)
+![](image/2-2.png)
 
 
 
@@ -133,9 +133,9 @@ public void test3() throws Exception{
 }
 ```
 
-![](image/4.png)
+![](image/2-3.png)
 
-![](image/5.png)
+![](image/2-4.png)
 
 
 
@@ -174,7 +174,7 @@ public void test4() throws Exception{
 }
 ```
 
-![](image/6.png)
+![](image/205.png)
 
 ### 1.4.2 建立文档（使用Jackson转换实体）
 
@@ -241,7 +241,7 @@ public void test5() throws Exception{
 
 
 
-![](image/7.png)
+![](image/2-6.png)
 
 
 
@@ -371,7 +371,7 @@ public void test9() throws Exception{
 }
 ```
 
-![](image/12.png)
+![](image/2-7.png)
 
 ### 2.6.2 分页查询
 
@@ -411,7 +411,7 @@ public void test10() throws Exception{
 }
 ```
 
-![](image/13.png)
+![](image/2-8.png)
 
 ## 2.7 查询结果高亮操作
 
@@ -421,17 +421,17 @@ public void test10() throws Exception{
 
 百度搜索关键字"传智播客"
 
-![](image/14.png)
+![](image/2-9.png)
 
 京东商城搜索"笔记本"
 
-![](image/15.png)
+![](image/2-10.png)
 
 ### 2.7.2 高亮显示的html分析
 
 通过开发者工具查看高亮数据的html代码实现：
 
-![](image/16.png)
+![](image/2-11.png)
 
 ElasticSearch可以对查询出的内容中关键字部分进行标签和样式的设置，但是你需要告诉ElasticSearch使用什么标签对高亮关键字进行包裹
 
@@ -483,17 +483,17 @@ public void test11() throws Exception{
 }
 ```
 
-![](image/17.png)
+![](image/2-12.png)
 
 
 
 
 
-# 第三章 Spring Data ElasticSearch 使用
+# 第二章 Spring Data ElasticSearch 使用
 
-## 3.1 Spring Data ElasticSearch简介
+## 2.1 Spring Data ElasticSearch简介
 
-### 3.1.1 什么是Spring Data
+### 2.1.1 什么是Spring Data
 
 Spring Data是一个用于简化数据库访问，并支持云服务的开源框架。其主要目标是使得对数据的访问变得方便快捷，并支持map-reduce框架和云计算数据服务。 Spring Data可以极大的简化JPA的写法，可以在几乎不用写实现的情况下，实现对数据的访问和操作。除了CRUD外，还包括如分页、排序等一些常用的功能。
 
@@ -501,17 +501,17 @@ Spring Data的官网：http://projects.spring.io/spring-data/
 
 Spring Data常用的功能模块如下：
 
-![](image\18.png)
+![](image\2-13.png)
 
-![](image\19.png)
+![](image\2-14.png)
 
-### 3.1.2 什么是Spring Data ElasticSearch
+### 2.1.2 什么是Spring Data ElasticSearch
 
 Spring Data ElasticSearch 基于 spring data API 简化 elasticSearch操作，将原始操作elasticSearch的客户端API 进行封装 。Spring Data为Elasticsearch项目提供集成搜索引擎。Spring Data Elasticsearch POJO的关键功能区域为中心的模型与Elastichsearch交互文档和轻松地编写一个存储库数据访问层。
 
 官方网站：<http://projects.spring.io/spring-data-elasticsearch/> 
 
-## 3.2 Spring Data ElasticSearch入门
+## 2.2 Spring Data ElasticSearch入门
 
 1）导入Spring Data ElasticSearch坐标
 
@@ -863,9 +863,9 @@ public class SpringDataESTest {
 
 ```
 
-## 3.3 Spring Data ElasticSearch的常用操作
+## 2.3 Spring Data ElasticSearch的常用操作
 
-### 3.3.1 增删改查方法测试 
+### 2.3.1 增删改查方法测试 
 
 ```java
 package com.itheima.service;
@@ -1024,7 +1024,7 @@ public class SpringDataESTest {
 }
 ```
 
-### 3.3.2 常用查询命名规则
+### 2.3.2 常用查询命名规则
 
 | 关键字           | 命名规则                  | 解释                  | 示例                    |
 | ------------- | --------------------- | ------------------- | --------------------- |
@@ -1035,7 +1035,7 @@ public class SpringDataESTest {
 | between       | findByFieldBetween    | 获得指定范围的数据           | findByPriceBetween    |
 | lessThanEqual | findByFieldLessThan   | 获得小于等于指定值的数据        | findByPriceLessThan   |
 
-### 3.3.3 查询方法测试
+### 2.3.3 查询方法测试
 
 1）dao层实现
 
@@ -1154,7 +1154,7 @@ public class SpringDataESTest {
 }
 
 ```
-###3.3.4使用Elasticsearch的原生查询对象进行查询。
+###2.3.4使用Elasticsearch的原生查询对象进行查询。
 ```java
 @Test
     public void findByNativeQuery() {
