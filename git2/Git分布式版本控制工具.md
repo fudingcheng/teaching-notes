@@ -367,8 +367,9 @@ $ git branch -a
 
 ![1559617620953](img/图片40.png)
 
-注：如果要删除远程仓库中的分支，可以使用命令git push
-origin –d branchName
+注：如果要删除远程仓库中的分支，可以使用命令
+
+git push origin –d branchName
 
 ## 4. 在IDEA中使用Git 
 
