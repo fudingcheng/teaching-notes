@@ -402,8 +402,6 @@ public class VO {
     </filter-mapping>
 ```
 
-
-
 ### 19-SpringMVC的请求-获得请求参数-参数绑定注解@RequestParam(应用)
 
 当请求的参数名称与Controller的业务方法参数名称不一致时，就需要通过@RequestParam注解显示的绑定
@@ -413,7 +411,6 @@ public class VO {
     <input type="text" name="name"><br>
     <input type="submit" value="提交"><br>
 </form>
-
 ```
 
 ```java
