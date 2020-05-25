@@ -337,11 +337,11 @@ public class MyImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegi
 
 @EnableAutoConfiguration中使用的是第三种方式@Import(AutoConfigurationImportSelector.class)来加载配置类。 
 
-1. @EnableAutoConfiguration 注解内部使用 @Import(AutoConfigurationImportSelector.class)来加载配置类。 
+1. **@EnableAutoConfiguration 注解内部使用 @Import(AutoConfigurationImportSelector.class)来加载配置类。** 
 
 ![image-20200524181106426](assets/image-20200524181106426.png)
 
-2. 配置文件位置：META-INF/spring.factories，该配置文件中定义了大量的配置类，当 SpringBoot 应用启动时，会自动加载这些配置类，初始化Bean。
+2. **配置文件位置：META-INF/spring.factories，该配置文件中定义了大量的配置类，当 SpringBoot 应用启动时，会自动加载这些配置类，初始化Bean。**
 
 ![image-20200524181141847](assets/image-20200524181141847.png)
 
@@ -349,7 +349,7 @@ public class MyImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegi
 
 ![image-20200524181226657](assets/image-20200524181226657.png)
 
-3. 并不是所有的Bean都会被初始化，在配置类中使用Condition来加载满足条件的Bean
+3. **并不是所有的Bean都会被初始化，在配置类中使用Condition来加载满足条件的Bean**
 
 ![image-20200524181407710](assets/image-20200524181407710.png)
 
@@ -480,31 +480,33 @@ public class RedisAutoConfiguration {
 
 ## 3. SpringBoot事件监听
 
+### 3.1 Java的事件监听机制
+
  Java中的事件监听机制定义了以下几个角色：
 
-①事件：Event，继承 java.util.EventObject 类的对象
+1. 事件：Event，继承 java.util.EventObject 类的对象
+2. 事件源：Source ，任意对象Object;
+3. 监听器：Listener，实现 java.util.EventListener 接口 的对象
 
-②事件源：Source ，任意对象Object
+![](assets/EventModel.jpg)
 
-③监听器：Listener，实现 java.util.EventListener 接口 的对象
+### 3.2 Springboot监听器
 
+**SpringBoot监听器的机制：**SpringBoot的事件机制其实是对Java事件监听机制的封装。
 
+**SpringBoot监听器的作用：**SpringBoot 在项目启动时，在项目启动时完成一些操作。
 
-SpringBoot 在项目启动时，会对几个监听器进行回调，我们可以实现这些监听器接口，在项目启动时完成一些操作。
+**SpringBoot监听器的种类：**
 
-- ApplicationContextInitializer、
+- ApplicationContextInitializer：在spring的IOC容器初始化前执行
+- SpringApplicationRunListener：
+- CommandLineRunner：在项目启动时执行一些预操作。
+- ApplicationRunner：在项目启动时执行一些预操作。
+- ```ApplicationRunner```和```CommandLineRunner```基本一样，主要区别就在于```run```方法的参数上，ApplicationRunner将外部传递的参数值封装成了对象```ApplicationArguments```，而```CommandLineRunner```的```run```方法用可变参数进行封装。
 
-- SpringApplicationRunListener、
+自定义监听器的启动时机：ApplicationRunner和CommandLineRunner的实现类都是当项目启动后执行，使用@Component放入容器即可使用。
 
-- CommandLineRunner、
-
-- ApplicationRunner
-
-  
-  
-  自定义监听器的启动时机：MyApplicationRunner和MyCommandLineRunner都是当项目启动后执行，使用@Component放入容器即可使用
-
-MyApplicationRunner
+#### 1. MyApplicationRunner
 
 ```java
 /**
@@ -520,7 +522,7 @@ public class MyApplicationRunner implements ApplicationRunner {
 } 
 ```
 
- MyCommandLineRunner
+#### 2. MyCommandLineRunner
 
 ```java
 @Component
@@ -531,12 +533,13 @@ public class MyCommandLineRunner implements CommandLineRunner {
         System.out.println(Arrays.asList(args));
     }
 }
-
 ```
 
+#### 3. ApplicationContextInitializer
 
+​	启动的三种方式：
 
-MyApplicationContextInitializer的使用要在resource文件夹下添加META-INF/spring.factories
+​	方式1：在resource文件夹下添加META-INF/spring.factories，并配置实现类
 
 ```properties
 org.springframework.context.ApplicationContextInitializer=com.itheima.springbootlistener.listener.MyApplicationContextInitializer
@@ -552,9 +555,27 @@ public class MyApplicationContextInitializer implements ApplicationContextInitia
 }
 ```
 
-MySpringApplicationRunListener的使用要添加**构造器**
+​	方式2：在application.yaml配置实现类
 
+```yaml
+context:
+  initializer:
+    classes: com.itheima.event.MyApplicationContextInitializer
 ```
+
+​	方式3：在启动类的main方法中通过```addInitializers```方法添加实现类
+
+```java
+SpringApplication springApplication = new SpringApplication(DemoApplication.class);
+springApplication.addInitializers(new MyApplicationContextInitializer());
+springApplication.run(args);
+```
+
+#### 4. SpringApplicationRunListener
+
+**① 创建SpringApplicationRunListener的实现类**
+
+```java
 public class MySpringApplicationRunListener implements SpringApplicationRunListener {
 
     public MySpringApplicationRunListener(SpringApplication application, String[] args) {
@@ -597,7 +618,21 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
 }
 ```
 
-## **12-SpringBoot流程分析-初始化**
+**② 配置SpringApplicationRunListener**
+
+```java
+org.springframework.boot.SpringApplicationRunListener=\
+  com.itheima.event.MySpringApplicationRunListener
+```
+
+**③ 给SpringApplicationRunListener添加有参构造方法**
+
+```java
+public MySpringApplicationRunListener(SpringApplication application, String[] args) {
+}
+```
+
+## 12-SpringBoot流程分析-初始化
 
 1.  配置启动引导类（判断是否有启动主类）
 
@@ -605,7 +640,6 @@ public class MySpringApplicationRunListener implements SpringApplicationRunListe
 
 3. 获取初始化类、监听器类
 
-   
 
 ![1571369439416](img/1571369439416.png)
 
