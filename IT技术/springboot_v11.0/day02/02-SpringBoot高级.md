@@ -632,7 +632,9 @@ public MySpringApplicationRunListener(SpringApplication application, String[] ar
 }
 ```
 
-## 12-SpringBoot流程分析-初始化
+## 4. SpringBoot源码分析
+
+### 4.1 初始化
 
 1.  配置启动引导类（判断是否有启动主类）
 
