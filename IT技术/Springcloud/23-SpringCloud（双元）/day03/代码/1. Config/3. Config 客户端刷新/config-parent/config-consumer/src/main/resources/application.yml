@@ -1,0 +1,18 @@
+server:
+  port: 9000
+
+
+eureka:
+  instance:
+    hostname: localhost # 主机名
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+spring:
+  application:
+    name: config-consumer
+
+# 开启feign对hystrix的支持
+feign:
+  hystrix:
+    enabled: true

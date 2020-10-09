@@ -1,0 +1,15 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: config-server
+  # spring cloud config
+  cloud:
+    config:
+      server:
+        # git 的 远程仓库地址
+        git:
+          uri: https://gitee.com/itheima_cch/itheima-configs.git
+      label: master # 分支配置
+

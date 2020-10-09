@@ -1,0 +1,8 @@
+适合新手，老手可以直接路过
+
+1、先安装SecureCRT or SecureFX 7.0；(64位)
+2、将相应的kg文件复制到安装目录下、运行（如运行报错缺少.dll文件，则安装vcredist_x86.exe库文件）；
+3、运行注册机，先点patch，会替换两个源文件SecureCRT.exe和LicenseHelper.exe，选到相应的文件即可（见图01、02、03）
+4、运行SecureCRT.exe，直接点下一步，然后再点Enter License Manually，在弹出的对话框中输入name & company 再进行下一步（图05-1，05-2，04）
+5、此处输入注册机生成的Serial及License key、下一步后输入Issue date，下面一项留空，再进行下一步
+6、点击完成，注册成功（图09、10）

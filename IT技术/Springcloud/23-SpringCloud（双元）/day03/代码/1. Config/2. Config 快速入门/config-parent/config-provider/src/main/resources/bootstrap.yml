@@ -1,0 +1,13 @@
+# 配置config-server地址
+# 配置获得配置文件的名称等信息
+spring:
+  cloud:
+    config:
+      # 配置config-server地址
+      uri: http://localhost:9527
+      # 配置获得配置文件的名称等信息
+      name: config # 文件名
+      profile: dev # profile指定，  config-dev.yml
+      label: master # 分支
+
+
