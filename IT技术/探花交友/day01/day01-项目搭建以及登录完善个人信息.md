@@ -569,7 +569,7 @@ docker rm rmqbroker rmqserver
 docker pull styletang/rocketmq-console-ng:1.0.0
 
 #创建并启动容器
-docker run -e  "JAVA_OPTS=-Drocketmq.namesrv.addr=192.168.23.129:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false -Duser.timezone='Asia/Shanghai'" -p 8082:8080 -t styletang/rocketmq-console-ng:1.0.0
+docker run -e  "JAVA_OPTS=-Drocketmq.namesrv.addr=192.168.23.129:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false -Duser.timezone='Asia/Shanghai'" -p 8082:8080 --name rocketmq-console -t styletang/rocketmq-console-ng:1.0.0
 ~~~
 
 #### 3.1.4 搭建客户端
