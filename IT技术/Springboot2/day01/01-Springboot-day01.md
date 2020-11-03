@@ -1,7 +1,3 @@
----
-
----
-
 # 1. SpringBoot概述
 
  SpringBoot提供了一种快速使用Spring的方式，基于约定优于配置的思想，可以让开发人员不必在配置与逻辑业务之间进行思维的切换，全身心的投入到逻辑业务的代码编写中，从而大大提高了开发的效率，一定程度上缩短了开发周期。
@@ -36,7 +32,7 @@
 
 ​		提供了一些大型项目中常见的非功能性特性，如嵌入式服务器、安全、指标，健康检测、外部配置等。
 
-==小结：Spring Boot 并不是对 Spring 功能上的增强，而是提供了一种快速使用 Spring 的方式。==
+==小结：Spring Boot 并不是对 Spring 功能上的增强，而是提供了一种简化使用 Spring 的方式。==
 
 # 2. SpringBoot快速入门
 
@@ -52,19 +48,19 @@
 
 ```xml
 <!--springboot工程需要继承的父工程-->
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.1.8.RELEASE</version>
-    </parent>
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.1.8.RELEASE</version>
+</parent>
 
-    <dependencies>
-        <!--web开发的起步依赖-->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-    </dependencies>
+<dependencies>
+    <!--web开发的起步依赖-->
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+</dependencies>
 ```
 
 ### 3）定义Controller
@@ -94,7 +90,6 @@ public class HelloApplication {
         SpringApplication.run(HelloApplication.class,args);
     }
 }
-
 ```
 
 ### 5）启动测试
@@ -154,7 +149,8 @@ server.port=8080
 yml:
 
 ```yaml
-server: port: 8080
+server: 
+	port: 8080
 ```
 
 ## 5.2 yaml基本语法
@@ -168,7 +164,7 @@ server: port: 8080
 
 ```yaml
 server: 
-	port: 8080  
+	port: 8080
     address: 127.0.0.1
 name: abc
 ```
@@ -357,12 +353,15 @@ spring:
 
 ## 7.1 内部文件加载顺序
 
- 加载顺序为下文的排列顺序，高优先级配置的属性会生效
+ 加载顺序为下面的排列顺序，高优先级配置的属性会生效
 
-- 【file】./config/：当前项目下的/config目录下
-- 【file】./：当前项目的根目录
-- 【classpath】/config/：classpath的/config目录
-- 【classpath】./：classpath的根目录
+1. 【file】./config/：当前项目下的/config目录下
+
+2. 【file】./：当前项目的根目录
+
+3. 【classpath】/config/：classpath的/config目录
+
+4. 【classpath】./：classpath的根目录
 
 ## 7.2 外部文件加载顺序
 
@@ -402,16 +401,16 @@ classpath:/application.properties
 
 ```xml
 <dependencies>
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter</artifactId>
-       </dependency>
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-test</artifactId>
-           <scope>test</scope>
-       </dependency>
-   </dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 ```
 
 ③ 编写测试类
@@ -435,7 +434,7 @@ public class UserServiceTest {
 
 ④ 测试
 
-==注意：如果test测试包和src下的包名相同（或结构在src包的子包下），则不需要指定```@SpringBootTest(classes = DemoApplication.class)```==
+> 注意：如果test测试包和src下的包名相同（或结构在src包的子包下），则不需要指定```@SpringBootTest(classes = DemoApplication.class)```
 
 ## 8.2 SpringBoot整合mybatis
 
@@ -445,23 +444,24 @@ public class UserServiceTest {
 
 ```xml
 <dependencies>
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>2.1.0</version>
-        </dependency>
+    <dependency>
+        <groupId>org.mybatis.spring.boot</groupId>
+        <artifactId>mybatis-spring-boot-starter</artifactId>
+        <version>2.1.0</version>
+    </dependency>
 
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <!--<scope>runtime</scope>-->
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <dependency>
+        <groupId>mysql</groupId>
+        <artifactId>mysql-connector-java</artifactId>
+        <!--<scope>runtime</scope>-->
+    </dependency>
+    
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 ```
 
 ③ 编写DataSource和MyBatis相关配置
@@ -488,7 +488,7 @@ mybatis:
 
 ④ 定义表和实体类
 
-```
+```java
 public class User {
     private int id;
     private String username;
@@ -567,7 +567,7 @@ public interface UserMapper {
 }
 ```
 
-⑥测试
+⑥ 测试
 
 ## 8.3 SpringBoot整合redis
 
@@ -576,18 +576,18 @@ public interface UserMapper {
 ② 引入redis起步依赖
 
 ```xml
-  <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-redis</artifactId>
+    </dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
-    </dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
 ```
 
 ③ 配置redis相关属性
@@ -597,7 +597,6 @@ spring:
   redis:
     host: 127.0.0.1 # redis的主机ip
     port: 6379
-
 ```
 
 ④ 注入RedisTemplate模板
