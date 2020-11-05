@@ -355,9 +355,9 @@ public class MyImportBeanDefinitionRegistrar implements ImportBeanDefinitionRegi
 
 ### 7）总结
 
-![](assets/r.png)
+<img src="assets/r.png" style="zoom:80%;" />
 
-## 2. springBoot自定义starter实现
+## 2. SpringBoot自定义starter实现
 
 > 需求：自定义redis-spring-boot-starter起步依赖
 
@@ -434,7 +434,7 @@ org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 
 **⑤ 在springboot工程中引入自定义的redis的starter**
 
-```
+```xml
 <!--自定义的redis的starter-->
 <dependency>
     <groupId>com.itheima</groupId>
@@ -494,14 +494,14 @@ public class RedisAutoConfiguration {
 
 **SpringBoot监听器的机制：**SpringBoot的事件机制其实是对Java事件监听机制的封装。
 
-**SpringBoot监听器的作用：**SpringBoot 在项目启动时，在项目启动时完成一些操作。
+**SpringBoot监听器的作用：**SpringBoot 在项目启动时完成一些操作。
 
 **SpringBoot监听器的种类：**
 
 - ApplicationContextInitializer：在spring的IOC容器初始化前执行
-- SpringApplicationRunListener：
-- CommandLineRunner：在项目启动时执行一些预操作。
-- ApplicationRunner：在项目启动时执行一些预操作。
+- SpringApplicationRunListener：在项目启动时执行一些预操作
+- CommandLineRunner：在项目启动时执行一些预操作
+- ApplicationRunner：在项目启动时执行一些预操作
 - ```ApplicationRunner```和```CommandLineRunner```基本一样，主要区别就在于```run```方法的参数上，ApplicationRunner将外部传递的参数值封装成了对象```ApplicationArguments```，而```CommandLineRunner```的```run```方法用可变参数进行封装。
 
 自定义监听器的启动时机：ApplicationRunner和CommandLineRunner的实现类都是当项目启动后执行，使用@Component放入容器即可使用。
@@ -645,7 +645,7 @@ public MySpringApplicationRunListener(SpringApplication application, String[] ar
 
 ![1571369439416](img/1571369439416.png)
 
-## **13-SpringBoot流程分析-run**
+### 4.2 SpringBoot流程分析-run
 
 1. 启动计时器
 
@@ -663,29 +663,23 @@ public MySpringApplicationRunListener(SpringApplication application, String[] ar
 
    执行refreshContext方法后才真正创建Bean
 
-   
 
 ![1571373793325](img/1571373793325.png)
 
+## 5. SpringBoot监控
 
-
-## **14-SpringBoot监控-actuator基本使用**
+### 5.1 actuator基本使用
 
  ①导入依赖坐标
 
 ```xml
 <dependency>
-
   <groupId>org.springframework.boot</groupId>
-
   <artifactId>spring-boot-starter-actuator</artifactId>
-
 </dependency>
 ```
 
-②访问http://localhost:8080/acruator
-
-
+②访问http://localhost:8080/actuator
 
 ```json
 {
@@ -753,7 +747,7 @@ management.endpoint.health.show-details=always
 }
 ```
 
-## **15-SpringBoot监控-actuator开启所有endpoint**
+### 5.2 开启所有endpoint
 
  开启所有endpoint
 
@@ -860,28 +854,28 @@ management.endpoints.web.exposure.include=*
 }
 ```
 
-## **16-SpringBoot监控-springboot admin图形化界面使用**
+### 5.3 图形化界面使用
 
 SpringBoot Admin 有两个角色，客户端(Client)和服务端(Server)。
 
 以下为创建服务端和客户端工程步骤：
 
-admin-server：
+#### 1）admin-server
 
-①创建 admin-server 模块
+① 创建 admin-server 模块
 
-②导入依赖坐标 admin-starter-server
+② 导入依赖坐标 admin-starter-server
 
 ![1571812312998](img/1571812312998.png)
 
 ```xml
-      <dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-server</artifactId>
-        </dependency>
+<dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-server</artifactId>
+</dependency>
 ```
 
-③在引导类上启用监控功能@EnableAdminServer
+③ 在引导类上启用监控功能@EnableAdminServer
 
 ```java
 @EnableAdminServer
@@ -896,22 +890,20 @@ public class SpringbootAdminServerApplication {
 
 ```
 
+#### 2）admin-client
 
+① 创建 admin-client 模块
 
-admin-client：
-
-①创建 admin-client 模块
-
-②导入依赖坐标 admin-starter-client
+② 导入依赖坐标 admin-starter-client
 
 ```xml
-  		<dependency>
-            <groupId>de.codecentric</groupId>
-            <artifactId>spring-boot-admin-starter-client</artifactId>
-        </dependency>
+<dependency>
+    <groupId>de.codecentric</groupId>
+    <artifactId>spring-boot-admin-starter-client</artifactId>
+</dependency>
 ```
 
-③配置相关信息：server地址等
+③ 配置相关信息：server地址等
 
 ```properties
 # 执行admin.server地址
@@ -921,17 +913,15 @@ management.endpoint.health.show-details=always
 management.endpoints.web.exposure.include=*
 ```
 
-④启动server和client服务，访问server
+④ 启动server和client服务，访问server
 
-## **17-SpringBoot部署**
-
- 
+## 6. SpringBoot部署
 
  SpringBoot 项目开发完毕后，支持两种方式部署到服务器：
 
-①jar包(官方推荐)
+① jar包(官方推荐)
 
-②war包
+② war包
 
 **更改pom文件中的打包方式为war**
 
@@ -959,19 +949,17 @@ public class SpringbootDeployApplication extends SpringBootServletInitializer {
 
 ```
 
-
-
 指定打包的名称
 
 ```xml
- <build>
-        <finalName>springboot</finalName>
-        <plugins>
-            <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-        </plugins>
-    </build>
+<build>
+   <finalName>springboot</finalName>
+   <plugins>
+       <plugin>
+           <groupId>org.springframework.boot</groupId>
+           <artifactId>spring-boot-maven-plugin</artifactId>
+       </plugin>
+   </plugins>
+</build>
 ```
 
