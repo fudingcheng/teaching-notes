@@ -93,7 +93,6 @@ POST _bulk
     }
   ]
 }
-
 ```
 
 
@@ -224,7 +223,7 @@ public void test3() throws IOException {
 }
 ```
 
-==注意事项：== 讲```spec```字段数据转换成```JSON```的原因：
+==注意事项：== 将```spec```字段数据转换成```JSON```的原因：
 
 ```JSON
 #spec配置的数据类型是JSON对象，所以当存放字符串的时候报错
@@ -659,7 +658,6 @@ GET goods/_search
     }
   }
 }
-
 ```
 
 ##### 2）JavaAPI操作
@@ -676,12 +674,12 @@ QueryStringQueryBuilder query = QueryBuilders.queryStringQuery("华为手机")
 
 > query中的==or==或==and==是在查询时是判断字段中是（or）或（and）包含查询条件
 >
-> efault_operator的==or==和==and==是对结果进行 并集（or）、交集（and）
+> default_operator的==or==和==and==是对结果进行 并集（or）、交集（and）
 
 
-### 1.3.7-布尔查询-脚本
+### 1.3.7 布尔查询-脚本
 
- boolQuery：对多个查询条件连接。
+ boolQuery：连接多种查询方式
 
 * must（and）：条件必须成立
 

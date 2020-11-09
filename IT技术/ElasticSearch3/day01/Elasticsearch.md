@@ -714,63 +714,55 @@ public void addIndexAndMapping() throws IOException {
 1. 查询索引
 
 ```java
+/**
+ * 查询索引
+ */
+@Test
+public void queryIndex() throws IOException {
+    IndicesClient indices = client.indices();
 
-   
-
-    /**
-     * 查询索引
-     */
-    @Test
-    public void queryIndex() throws IOException {
-        IndicesClient indices = client.indices();
-
-        GetIndexRequest getRequest=new GetIndexRequest("itcast");
-        GetIndexResponse response = indices.get(getRequest, RequestOptions.DEFAULT);
-        Map<String, MappingMetaData> mappings = response.getMappings();
-        //iter 提示foreach
-        for (String key : mappings.keySet()) {
-            System.out.println(key+"==="+mappings.get(key).getSourceAsMap());
-        }
+    GetIndexRequest getRequest=new GetIndexRequest("itcast");
+    GetIndexResponse response = indices.get(getRequest, RequestOptions.DEFAULT);
+    Map<String, MappingMetaData> mappings = response.getMappings();
+    //iter 提示foreach
+    for (String key : mappings.keySet()) {
+        System.out.println(key+"==="+mappings.get(key).getSourceAsMap());
     }
-
-   
-   
+}
 ```
 
 2. 删除索引
 
 ```java
- /**
-     * 删除索引
-     */
-    @Test
-    public void deleteIndex() throws IOException {
-         IndicesClient indices = client.indices();
-        DeleteIndexRequest deleteRequest=new DeleteIndexRequest("itheima");
-        AcknowledgedResponse delete = indices.delete(deleteRequest, RequestOptions.DEFAULT);
-        System.out.println(delete.isAcknowledged());
-
-    }
+/**
+ * 删除索引
+ */
+@Test
+public void deleteIndex() throws IOException {
+     IndicesClient indices = client.indices();
+    DeleteIndexRequest deleteRequest=new DeleteIndexRequest("itheima");
+    AcknowledgedResponse delete = indices.delete(deleteRequest, RequestOptions.DEFAULT);
+    System.out.println(delete.isAcknowledged());
+}
 ```
 
 3. 索引是否存在
 
 ```java
- /**
-     * 索引是否存在
-     */
-    @Test
-    public void existIndex() throws IOException {
-        IndicesClient indices = client.indices();
+/**
+ * 索引是否存在
+ */
+@Test
+public void existIndex() throws IOException {
+    IndicesClient indices = client.indices();
 
-        GetIndexRequest getIndexRequest=new GetIndexRequest("itheima");
-        boolean exists = indices.exists(getIndexRequest, RequestOptions.DEFAULT);
+    GetIndexRequest getIndexRequest=new GetIndexRequest("itheima");
+    boolean exists = indices.exists(getIndexRequest, RequestOptions.DEFAULT);
 
 
-        System.out.println(exists);
+    System.out.println(exists);
 
-    }
-    
+}
 ```
 
 ### 6.4 添加文档
@@ -778,16 +770,16 @@ public void addIndexAndMapping() throws IOException {
 1.添加文档,使用map作为数据
 
 ```java
- @Test
-    public void addDoc1() throws IOException {
-        Map<String, Object> map=new HashMap<>();
-        map.put("name","张三");
-        map.put("age","18");
-        map.put("address","北京二环");
-        IndexRequest request=new IndexRequest("itcast").id("1").source(map);
-        IndexResponse response = client.index(request, RequestOptions.DEFAULT);
-        System.out.println(response.getId());
-    }
+@Test
+public void addDoc1() throws IOException {
+    Map<String, Object> map=new HashMap<>();
+    map.put("name","张三");
+    map.put("age","18");
+    map.put("address","北京二环");
+    IndexRequest request=new IndexRequest("itcast").id("1").source(map);
+    IndexResponse response = client.index(request, RequestOptions.DEFAULT);
+    System.out.println(response.getId());
+}
 ```
 
  2.添加文档,使用对象作为数据
