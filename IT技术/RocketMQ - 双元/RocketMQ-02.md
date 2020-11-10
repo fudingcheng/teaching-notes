@@ -1,19 +1,8 @@
 # 1. RocketMQ集群搭建
 
-## 1.1 各角色介绍
+## 1.1 集群搭建方式
 
-* Producer：消息的发送者；举例：发信者
-* Consumer：消息接收者；举例：收信者
-* Broker：暂存和传输消息；举例：邮局
-* NameServer：管理Broker；举例：各个邮局的管理机构
-* Topic：区分消息的种类；一个发送者可以发送消息给一个或者多个Topic；一个消息的接收者可以订阅一个或者多个Topic消息
-* Message Queue：相当于是Topic的分区；用于并行发送和接收消息
-
-![](assets/RocketMQ角色.jpg)
-
-## 1.2 集群搭建方式
-
-### 1.2.1 集群特点
+### 1.1.1 集群特点
 
 - NameServer是一个几乎无状态节点，可集群部署，节点之间无任何信息同步。
 
@@ -21,7 +10,7 @@
 - Producer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer取Topic路由信息，并向提供Topic服务的Master建立长连接，且定时向Master发送心跳。Producer完全无状态，可集群部署。
 - Consumer与NameServer集群中的其中一个节点（随机选择）建立长连接，定期从NameServer取Topic路由信息，并向提供Topic服务的Master、Slave建立长连接，且定时向Master、Slave发送心跳。Consumer既可以从Master订阅消息，也可以从Slave订阅消息，订阅规则由Broker配置决定。
 
-### 1.2.3 集群模式
+### 1.2.2 集群模式
 
 #### 1）单Master模式
 
@@ -48,15 +37,15 @@
 - 优点：数据与服务都无单点故障，Master宕机情况下，消息无延迟，服务可用性与数据可用性都非常高；
 - 缺点：性能比异步复制模式略低（大约低10%左右），发送单个消息的RT会略高，且目前版本在主节点宕机后，备机不能自动切换为主机。
 
-## 1.3 双主双从集群搭建
+## 1.2 双主双从集群搭建
 
-### 1.3.1 总体架构
+### 1.2.1 总体架构
 
 消息高可用采用2m-2s（同步双写）方式
 
 ![](assets/RocketMQ集群.png)
 
-### 1.3.2 集群工作流程
+### 1.2.2 集群工作流程
 
 1. 启动NameServer，NameServer起来后监听端口，等待Broker、Producer、Consumer连上来，相当于一个路由控制中心。
 2. Broker启动，跟所有的NameServer保持长连接，定时发送心跳包。心跳包中包含当前Broker信息(IP+端口等)以及存储所有Topic信息。注册成功后，NameServer集群中就有Topic跟Broker的映射关系。
@@ -64,14 +53,14 @@
 4. Producer发送消息，启动时先跟NameServer集群中的其中一台建立长连接，并从NameServer中获取当前发送的Topic存在哪些Broker上，轮询从队列列表中选择一个队列，然后与队列所在的Broker建立长连接从而向Broker发消息。
 5. Consumer跟Producer类似，跟其中一台NameServer建立长连接，获取当前订阅Topic存在哪些Broker上，然后直接跟Broker建立连接通道，开始消费消息。
 
-### 1.3.3 服务器环境
+### 1.2.3 服务器环境
 
 | **序号** | **IP**         | **角色**                 | **架构模式**    |
 | -------- | -------------- | ------------------------ | --------------- |
-| 1        | 192.168.25.135 | nameserver、brokerserver | Master1、Slave2 |
-| 2        | 192.168.25.138 | nameserver、brokerserver | Master2、Slave1 |
+| 1        | 192.168.23.129 | nameserver、brokerserver | Master1、Slave2 |
+| 2        | 192.168.25.130 | nameserver、brokerserver | Master2、Slave1 |
 
-### 3.3.4 Host添加信息
+### 1.2.4 Host添加信息
 
 ```bash
 vim /etc/hosts
@@ -81,13 +70,13 @@ vim /etc/hosts
 
 ```bash
 # nameserver
-192.168.25.135 rocketmq-nameserver1
-192.168.25.138 rocketmq-nameserver2
+192.168.23.129 rocketmq-nameserver1
+192.168.25.130 rocketmq-nameserver2
 # broker
-192.168.25.135 rocketmq-master1
-192.168.25.135 rocketmq-slave2
-192.168.25.138 rocketmq-master2
-192.168.25.138 rocketmq-slave1
+192.168.23.129 rocketmq-master1
+192.168.23.129 rocketmq-slave2
+192.168.25.130 rocketmq-master2
+192.168.25.130 rocketmq-slave1
 ```
 
 配置完成后, 重启网卡
@@ -96,7 +85,7 @@ vim /etc/hosts
 systemctl restart network
 ```
 
-### 1.3.5 防火墙配置
+### 1.2.5 防火墙配置
 
 宿主机需要远程访问虚拟机的rocketmq服务和web服务，需要开放相关的端口号，简单粗暴的方式是直接关闭防火墙
 
@@ -128,7 +117,7 @@ firewall-cmd --remove-port=11011/tcp --permanent
 firewall-cmd --reload
 ```
 
-### 1.3.6 环境变量配置
+### 1.2.6 环境变量配置
 
 ```bash
 vim /etc/profile
@@ -149,16 +138,23 @@ export ROCKETMQ_HOME PATH
 source /etc/profile
 ```
 
-### 1.3.7 创建消息存储路径
+### 1.2.7 创建消息存储路径
 
 ```bash
-mkdir /usr/local/rocketmq/store
-mkdir /usr/local/rocketmq/store/commitlog
-mkdir /usr/local/rocketmq/store/consumequeue
-mkdir /usr/local/rocketmq/store/index
+# master
+mkdir -p /usr/local/rocketmq/store
+mkdir -p /usr/local/rocketmq/store/commitlog
+mkdir -p /usr/local/rocketmq/store/consumequeue
+mkdir -p /usr/local/rocketmq/store/index
+
+# slave
+mkdir -p /usr/local/rocketmq/store-slave
+mkdir -p /usr/local/rocketmq/store-slave/commitlog
+mkdir -p /usr/local/rocketmq/store-slave/consumequeue
+mkdir -p /usr/local/rocketmq/store-slave/index
 ```
 
-### 1.3.8 broker配置文件
+### 1.2.8 broker配置文件
 
 #### 1）master1
 
@@ -273,17 +269,17 @@ mapedFileSizeConsumeQueue=300000
 #检测物理文件磁盘空间
 diskMaxUsedSpaceRatio=88
 #存储路径
-storePathRootDir=/usr/local/rocketmq/store
+storePathRootDir=/usr/local/rocketmq/store-slave
 #commitLog 存储路径
-storePathCommitLog=/usr/local/rocketmq/store/commitlog
+storePathCommitLog=/usr/local/rocketmq/store-slave/commitlog
 #消费队列存储路径存储路径
-storePathConsumeQueue=/usr/local/rocketmq/store/consumequeue
+storePathConsumeQueue=/usr/local/rocketmq/store-slave/consumequeue
 #消息索引存储路径
-storePathIndex=/usr/local/rocketmq/store/index
+storePathIndex=/usr/local/rocketmq/store-slave/index
 #checkpoint 文件存储路径
-storeCheckpoint=/usr/local/rocketmq/store/checkpoint
+storeCheckpoint=/usr/local/rocketmq/store-slave/checkpoint
 #abort 文件存储路径
-abortFile=/usr/local/rocketmq/store/abort
+abortFile=/usr/local/rocketmq/store-slave/abort
 #限制的消息大小
 maxMessageSize=65536
 #flushCommitLogLeastPages=4
@@ -419,17 +415,17 @@ mapedFileSizeConsumeQueue=300000
 #检测物理文件磁盘空间
 diskMaxUsedSpaceRatio=88
 #存储路径
-storePathRootDir=/usr/local/rocketmq/store
+storePathRootDir=/usr/local/rocketmq/store-slave
 #commitLog 存储路径
-storePathCommitLog=/usr/local/rocketmq/store/commitlog
+storePathCommitLog=/usr/local/rocketmq/store-slave/commitlog
 #消费队列存储路径存储路径
-storePathConsumeQueue=/usr/local/rocketmq/store/consumequeue
+storePathConsumeQueue=/usr/local/rocketmq/store-slave/consumequeue
 #消息索引存储路径
-storePathIndex=/usr/local/rocketmq/store/index
+storePathIndex=/usr/local/rocketmq/store-slave/index
 #checkpoint 文件存储路径
-storeCheckpoint=/usr/local/rocketmq/store/checkpoint
+storeCheckpoint=/usr/local/rocketmq/store-slave/checkpoint
 #abort 文件存储路径
-abortFile=/usr/local/rocketmq/store/abort
+abortFile=/usr/local/rocketmq/store-slave/abort
 #限制的消息大小
 maxMessageSize=65536
 #flushCommitLogLeastPages=4
@@ -452,7 +448,7 @@ flushDiskType=ASYNC_FLUSH
 #pullMessageThreadPoolNums=128
 ```
 
-### 1.3.9 修改启动脚本文件
+### 1.2.9 修改启动脚本文件
 
 #### 1）runbroker.sh
 
@@ -478,7 +474,7 @@ vim /usr/local/rocketmq/bin/runserver.sh
 JAVA_OPT="${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m -XX:MetaspaceSize=128m -XX:MaxMetaspaceSize=320m"
 ```
 
-### 1.3.10 服务启动
+### 1.2.10 服务启动
 
 #### 1）启动NameServe集群
 
@@ -497,7 +493,7 @@ master1：
 
 ```bash
 cd /usr/local/rocketmq/bin
-nohup sh mqbroker -c /usr/local/rocketmq/conf/2m-2s-syncbroker-a.properties &
+nohup sh mqbroker -c /usr/local/rocketmq/conf/2m-2s-sync/broker-a.properties &
 ```
 
 slave2：
@@ -523,13 +519,13 @@ cd /usr/local/rocketmq/bin
 nohup sh mqbroker -c /usr/local/rocketmq/conf/2m-2s-sync/broker-a-s.properties &
 ```
 
-### 1.3.11 查看进程状态
+### 1.2.11 查看进程状态
 
 启动后通过JPS查看启动进程
 
 ![](assets/jps1.png)
 
-### 1.3.12 查看日志
+### 1.2.12 查看日志
 
 ```sh
 # 查看nameServer日志
@@ -1868,7 +1864,7 @@ RocketMQ的消息是存储到磁盘上的，这样既能保证断电后恢复，
 
 ####3）配置
 
-**同步刷盘还是异步刷盘，都是通过Broker配置文件里的flushDiskType 参数设置的，这个参数被配置成SYNC_FLUSH、ASYNC_FLUSH中的 一个。**
+**无论同步刷盘还是异步刷盘，都是通过Broker配置文件里的flushDiskType 参数设置的，这个参数被配置成SYNC_FLUSH、ASYNC_FLUSH中的 一个。**
 
 ## 2.2 高可用性机制
 

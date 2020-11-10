@@ -8,17 +8,17 @@
 
 其应用场景主要包含以下3个方面
 
-* 应用解耦
+### 1）应用解耦
 
 系统的耦合性越高，容错性就越低。以电商应用为例，用户创建订单后，如果耦合调用库存系统、物流系统、支付系统，任何一个子系统出了故障或者因为升级等原因暂时不可用，都会造成下单操作异常，影响用户使用体验。
 
 ![](img/解耦1.png)
 
-使用消息队列解耦合，系统的耦合性就会提高了。比如物流系统发生故障，需要几分钟才能来修复，在这段时间内，物流系统要处理的数据被缓存到消息队列中，用户的下单操作正常完成。当物流系统回复后，补充处理存在消息队列中的订单消息即可，终端系统感知不到物流系统发生过几分钟故障。
+使用消息队列解耦合，系统的耦合性就会提高了。比如物流系统发生故障，需要几分钟才能来修复，在这段时间内，物流系统要处理的数据被缓存到消息队列中，用户的下单操作正常完成。当物流系统回复后，补偿处理存在消息队列中的订单消息即可，终端系统感知不到物流系统发生过几分钟故障。
 
 ![](img/解耦2.png)
 
-* 流量削峰
+### 2）流量削峰
 
 ![](img/mq-5.png)
 
@@ -32,7 +32,7 @@
 
 业务系统正常时段的QPS如果是1000，流量最高峰是10000，为了应对流量高峰配置高性能的服务器显然不划算，这时可以使用消息队列对峰值流量削峰
 
-* 数据分发
+### 3）数据分发
 
 ![](img/mq-1.png)
 
@@ -56,7 +56,9 @@
 
   MQ的加入大大增加了系统的复杂度，以前系统间是同步的远程调用，现在是通过MQ进行异步调用。
 
-  如何保证消息没有被重复消费？怎么处理消息丢失情况？那么保证消息传递的顺序性？
+  * 如何保证消息没有被重复消费？
+  * 怎么处理消息丢失情况？
+  * 那么保证消息传递的顺序性？
 
 * 一致性问题
 
@@ -72,11 +74,22 @@
 
 # 2. RocketMQ快速入门
 
+## 2.1 各角色介绍
+
+* Producer：消息的发送者；举例：发信者
+* Consumer：消息接收者；举例：收信者
+* Broker：暂存和传输消息；举例：邮局
+* NameServer：管理Broker；举例：各个邮局的管理机构
+* Topic：区分消息的种类；一个发送者可以发送消息给一个或者多个Topic；一个消息的接收者可以订阅一个或者多个Topic消息
+* Message Queue：相当于是Topic的分区；用于并行发送和接收消息
+
+![](assets/RocketMQ角色.jpg)
+
 RocketMQ是阿里巴巴2016年MQ中间件，使用Java语言开发，在阿里内部，RocketMQ承接了例如“双11”等高并发场景的消息流转，能够处理万亿级别的消息。
 
-## 2.1 准备工作
+## 2.2 准备工作
 
-### 2.1.1 下载RocketMQ
+### 2.2.1 下载RocketMQ
 
 RocketMQ最新版本：4.5.1
 
@@ -90,22 +103,22 @@ RocketMQ最新版本：4.5.1
 
 * 源码安装需要安装Maven 3.2.x
 
-## 2.2 安装RocketMQ
+## 2.3 安装RocketMQ
 
-### 2.2.1 安装步骤
+### 2.3.1 安装步骤
 
 本教程以二进制包方式安装
 
 1. 解压安装包
 2. 进入安装目录
 
-### 2.2.2 目录介绍
+### 2.3.2 目录介绍
 
 * bin：启动脚本，包括shell脚本和CMD脚本
 * conf：实例配置文件 ，包括broker配置文件、logback配置文件等
 * lib：依赖jar包，包括Netty、commons-lang、FastJSON等
 
-## 2.3 启动RocketMQ
+## 2.4 启动RocketMQ
 
 1. 启动NameServer
 
@@ -139,9 +152,9 @@ vi runserver.sh
 
 ```JAVA_OPT="${JAVA_OPT} -server -Xms256m -Xmx256m -Xmn128m -XX:MetaspaceSize=128m  -XX:MaxMetaspaceSize=320m"```
 
-## 2.4 测试RocketMQ
+## 2.5 测试RocketMQ
 
-### 2.4.1 发送消息
+### 2.5.1 发送消息
 
 ```sh
 # 1.设置环境变量
@@ -150,7 +163,7 @@ export NAMESRV_ADDR=localhost:9876
 sh bin/tools.sh org.apache.rocketmq.example.quickstart.Producer
 ```
 
-### 2.4.2 接收消息
+### 2.5.2 接收消息
 
 ```shell
 # 1.设置环境变量
@@ -159,7 +172,7 @@ export NAMESRV_ADDR=localhost:9876
 sh bin/tools.sh org.apache.rocketmq.example.quickstart.Consumer
 ```
 
-## 2.5 关闭RocketMQ
+## 2.6 关闭RocketMQ
 
 ```shell
 # 1.关闭NameServer
@@ -180,7 +193,7 @@ sh bin/mqshutdown broker
 </dependency>
 ```
 
-* 消息发送者步骤分析r
+* 消息发送者步骤分析
 
 ```tex
 1.创建消息生产者producer，并制定生产者组名
@@ -759,6 +772,18 @@ RocketMQ只定义了一些基本语法来支持这个特性。你也可以很容
 
 ```java
 public void subscribe(finalString topic, final MessageSelector messageSelector)
+```
+
+注意：SQL过滤需要依赖服务器的功能支持，在broker配置文件中添加对应的功能项，并开启对应功能
+
+```
+enablePropertyFilter=true
+```
+
+ 启动服务器使启用对应配置文件
+
+```
+sh mqbroker -n localhost:9876 -c ../conf/broker.conf
 ```
 
 ### 3.5.2 消息生产者
