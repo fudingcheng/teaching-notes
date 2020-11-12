@@ -24,12 +24,12 @@ cd ~/mysql
 
 ```shell
 docker run -id \
--p 3307:3306 \
+-p 3306:3306 \
 --name=c_mysql \
 -v $PWD/conf:/etc/mysql/conf.d \
 -v $PWD/logs:/logs \
 -v $PWD/data:/var/lib/mysql \
--e MYSQL_ROOT_PASSWORD=123456 \
+-e MYSQL_ROOT_PASSWORD=root \
 mysql:5.6
 ```
 
@@ -76,10 +76,10 @@ cd ~/tomcat
 ```
 
 ```shell
-    docker run -id --name=c_tomcat \
-    -p 8080:8080 \
-    -v $PWD:/usr/local/tomcat/webapps \
-    tomcat 
+docker run -id --name=c_tomcat \
+-p 8080:8080 \
+-v $PWD:/usr/local/tomcat/webapps \
+tomcat 
 ```
 
 - 参数说明：

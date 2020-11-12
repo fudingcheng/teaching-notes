@@ -267,7 +267,7 @@ docker inspect 容器名称或者容器id
 
 思考：
 
-1. Docker 容器删除后，在容器中产生的数据也会随之销毁 
+1. Docker 容器删除后，在容器中产生的数据也会随之销毁
 
 2. Docker 容器和外部机器可以直接交换文件吗？ 
 
@@ -392,7 +392,7 @@ cat /volume/hello.txt
 
 参考资料中[docker应用部署.md](./docker应用部署.md)
 
-## 5.  Docerfile 
+## 5.  Docerfile
 
 前面的课程中已经知道了，要获得镜像，可以从Docker仓库中进行下载。
 
@@ -437,7 +437,7 @@ docker commit 381827f60f70 itheima_tomcat:1.0
 
 ~~~shell
 # 命令形式：docker save –o tar文件名 镜像名
-docker save -o itheima_tomcat:1.0.tar
+docker save -o itheima_tomcat.tar itheima_tomcat:1.0
 ~~~
 
 3. 使用docker load命令可以根据tar文件恢复为docker镜像。
@@ -521,7 +521,7 @@ Dochub网址：https://hub.docker.com
 文件编写完成执行命令构建：
 
 ~~~shell
-docker build -f ./centos_dockerfile -t itheima_centos:1
+docker build -f ./centos_dockerfile -t itheima_centos:1 .
 ~~~
 
 查看创建的自定义镜像

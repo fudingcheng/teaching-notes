@@ -66,7 +66,6 @@ server {
     location / {
         proxy_pass http://app:8080;	# 访问nginx，讲请求转发到app容器的8080端口上
     }
-   
 }
 ```
 
