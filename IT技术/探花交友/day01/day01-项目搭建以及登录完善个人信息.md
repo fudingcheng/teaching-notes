@@ -520,7 +520,7 @@ docker start redis-node01 redis-node02 redis-node03
 docker exec -it redis-node01 /bin/bash
 
 #组件集群
-redis-cli --cluster create 192.168.23.129:6379 192.168.23.129:6380 192.168.23.129:6381 --cluster-replicas 0
+redis-cli --cluster create 172.29.185.26:6379 172.29.185.26:6380 172.29.185.26:6381 --cluster-replicas 0
 
 #查询集群信息
 127.0.0.1:6379> CLUSTER NODES
@@ -545,8 +545,8 @@ foxiswho/rocketmq:server-4.3.2
 
 #创建broker.conf文件
 vim /itcast/rmq/rmqbroker/conf/broker.conf
-brokerIP1=192.168.23.129
-namesrvAddr=192.168.23.129:9876
+brokerIP1=172.29.185.26
+namesrvAddr=172.29.185.26:9876
 brokerName=broker_tanhua
 
 #创建broker容器
@@ -569,7 +569,7 @@ docker rm rmqbroker rmqserver
 docker pull styletang/rocketmq-console-ng:1.0.0
 
 #创建并启动容器
-docker run -e  "JAVA_OPTS=-Drocketmq.namesrv.addr=192.168.23.129:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false -Duser.timezone='Asia/Shanghai'" -p 8082:8080 --name rocketmq-console -t styletang/rocketmq-console-ng:1.0.0
+docker run -e  "JAVA_OPTS=-Drocketmq.namesrv.addr=172.29.185.26:9876 -Dcom.rocketmq.sendMessageWithVIPChannel=false -Duser.timezone='Asia/Shanghai'" -p 8080:8080 --name rocketmq-console -t styletang/rocketmq-console-ng:1.0.0
 ~~~
 
 #### 3.1.4 搭建客户端

@@ -39,7 +39,7 @@ SpringBoot 整合 MyBatis-Plus，并实现根据Id查询功能。
 ### 2.2 创建工程引入依赖
 
 ```xml
- <parent>
+<parent>
     <groupId>org.springframework.boot</groupId>
     <artifactId>spring-boot-starter-parent</artifactId>
     <version>2.3.4.RELEASE</version>
@@ -322,26 +322,26 @@ public class PageConfig {
 
 ```java
 /**
-     * 分页查询：
-     *  1. 当前页码：currentPage
-     *  2. 每页显示条数：size
-     *
-     *  注意：使用mp的分页要设置一个拦截器！！！
-            */
-    @Test
-    public void testSelectPage() {
-        int current = 1;//当前页码
-        int size = 2;//每页显示条数
-        IPage<User> page = new Page(current,size);
-        userMapper.selectPage(page,null);
+ * 分页查询：
+ *  1. 当前页码：currentPage
+ *  2. 每页显示条数：size
+ *
+ *  注意：使用mp的分页要设置一个拦截器！！！
+        */
+@Test
+public void testSelectPage() {
+    int current = 1;//当前页码
+    int size = 2;//每页显示条数
+    IPage<User> page = new Page(current,size);
+    userMapper.selectPage(page,null);
 
-        List<User> records = page.getRecords();//当前页的数据
-        long pages = page.getPages();//总页数 2
-        long total = page.getTotal();//总记录数 4
-        System.out.println(records);
-        System.out.println(pages);
-        System.out.println(total);
-    }
+    List<User> records = page.getRecords();//当前页的数据
+    long pages = page.getPages();//总页数 2
+    long total = page.getTotal();//总记录数 4
+    System.out.println(records);
+    System.out.println(pages);
+    System.out.println(total);
+}
 ```
 
 ### 4.2 条件构造器查询
@@ -404,20 +404,20 @@ or( ) ：让紧接着下一个方法用or连接
 
 ```java
 @Test
-    public void testWrapper2(){
-        //1.创建查询条件构建器
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        //2.设置条件
-        wrapper.eq("user_name","lisi")
-                .or()
-                .lt("age",23)
-                .in("name","李四","王五");
-        /*
-            select * from tb_user where user_name = ? or age < ? and name in (?,?)
-         */
-        List<User> users = userMapper.selectList(wrapper);
-        System.out.println(users);
-    }
+public void testWrapper2(){
+    //1.创建查询条件构建器
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    //2.设置条件
+    wrapper.eq("user_name","lisi")
+            .or()
+            .lt("age",23)
+            .in("name","李四","王五");
+    /*
+        select * from tb_user where user_name = ? or age < ? and name in (?,?)
+     */
+    List<User> users = userMapper.selectList(wrapper);
+    System.out.println(users);
+}
 ```
 
 #### 4.2.3 模糊查询 like
@@ -433,23 +433,23 @@ likeRight
 
 ```java
 /**
-     * 模糊查询
+ * 模糊查询
+ */
+@Test
+public void testWrapper3(){
+    //1.创建查询条件构建器
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    //2.设置条件
+    wrapper.likeLeft("user_name","zhang");
+    /*
+        SELECT id,user_name,password,name,age,email
+         from tb_user
+         where user_name like ?
+         %zhang
      */
-    @Test
-    public void testWrapper3(){
-        //1.创建查询条件构建器
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        //2.设置条件
-        wrapper.likeLeft("user_name","zhang");
-        /*
-            SELECT id,user_name,password,name,age,email
-             from tb_user
-             where user_name like ?
-             %zhang
-         */
-        List<User> users = userMapper.selectList(wrapper);
-        System.out.println(users);
-    }
+    List<User> users = userMapper.selectList(wrapper);
+    System.out.println(users);
+}
 ```
 
 
@@ -466,22 +466,22 @@ orderByDesc
 
 ```java
 @Test
-    public void testWrapper4(){
-        //1.创建查询条件构建器
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        //2.设置条件
-        wrapper.eq("user_name","lisi")
-                .or()
-                .lt("age",23)
-                .in("name","李四","王五")
-                //.orderBy(true,true,"age")
-                .orderByDesc("age");
-        /*
-            select * from tb_user where user_name = ? or age < ? and name in (?,?) order by age asc
-         */
-        List<User> users = userMapper.selectList(wrapper);
-        System.out.println(users);
-    }
+public void testWrapper4(){
+    //1.创建查询条件构建器
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    //2.设置条件
+    wrapper.eq("user_name","lisi")
+            .or()
+            .lt("age",23)
+            .in("name","李四","王五")
+            //.orderBy(true,true,"age")
+            .orderByDesc("age");
+    /*
+        select * from tb_user where user_name = ? or age < ? and name in (?,?) order by age asc
+     */
+    List<User> users = userMapper.selectList(wrapper);
+    System.out.println(users);
+}
 ```
 
 
@@ -490,23 +490,23 @@ orderByDesc
 
 ```java
 @Test
-    public void testWrapper5(){
-        //1.创建查询条件构建器
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        //2.设置条件
-        wrapper.eq("user_name","lisi")
-                .or()
-                .lt("age",23)
-                .in("name","李四","王五")
-                //.orderBy(true,true,"age")
-                .orderByDesc("age")
-                .select("id","user_name");
-        /*
-            select id,user_name from tb_user where user_name = ? or age < ? and name in (?,?) order by age asc
-         */
-        List<User> users = userMapper.selectList(wrapper);
-        System.out.println(users);
-    }
+public void testWrapper5(){
+    //1.创建查询条件构建器
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    //2.设置条件
+    wrapper.eq("user_name","lisi")
+            .or()
+            .lt("age",23)
+            .in("name","李四","王五")
+            //.orderBy(true,true,"age")
+            .orderByDesc("age")
+            .select("id","user_name");
+    /*
+        select id,user_name from tb_user where user_name = ? or age < ? and name in (?,?) order by age asc
+     */
+    List<User> users = userMapper.selectList(wrapper);
+    System.out.println(users);
+}
 ```
 
 
@@ -515,24 +515,24 @@ orderByDesc
 
 ```java
 @Test
-    public void testWrapper6(){
+public void testWrapper6(){
 
-        int current = 1;//当前页码
-        int size = 2;//每页显示条数
-        //1. 构建分页对象
-        Page<User> page = new Page<>(current,size);
-        //2. 构建条件对象
-        QueryWrapper<User> wrapper = new QueryWrapper();
-        wrapper.lt("age",23);
-        userMapper.selectPage(page,wrapper);
-        List<User> records = page.getRecords();
-        long total = page.getTotal();
-        long pages = page.getPages();
-        System.out.println(records);
-        System.out.println(total);//2
-        System.out.println(pages);//1
+    int current = 1;//当前页码
+    int size = 2;//每页显示条数
+    //1. 构建分页对象
+    Page<User> page = new Page<>(current,size);
+    //2. 构建条件对象
+    QueryWrapper<User> wrapper = new QueryWrapper();
+    wrapper.lt("age",23);
+    userMapper.selectPage(page,wrapper);
+    List<User> records = page.getRecords();
+    long total = page.getTotal();
+    long pages = page.getPages();
+    System.out.println(records);
+    System.out.println(total);//2
+    System.out.println(pages);//1
 
-    }
+}
 ```
 
 
@@ -541,11 +541,11 @@ orderByDesc
 
 ```java
 @Test
-    public void testWrapper7(){
-        LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
-        wrapper.eq(User::getUserName,"zhangsan");
-        userMapper.selectOne(wrapper);
-    }
+public void testWrapper7(){
+    LambdaQueryWrapper<User> wrapper = new LambdaQueryWrapper<>();
+    wrapper.eq(User::getUserName,"zhangsan");
+    userMapper.selectOne(wrapper);
+}
 ```
 
 
@@ -555,12 +555,12 @@ orderByDesc
 ![image-20201008121325431](assets/image-20201008121325431.png)
 
 ```java
- @Test
-    public void testWrapper8(){
-        QueryWrapper<User> wrapper = new QueryWrapper<>();
-        wrapper.eq("user_name","bbb");
-        userMapper.delete(wrapper);
-    }
+@Test
+public void testWrapper8(){
+    QueryWrapper<User> wrapper = new QueryWrapper<>();
+    wrapper.eq("user_name","bbb");
+    userMapper.delete(wrapper);
+}
 ```
 
 
@@ -571,28 +571,28 @@ orderByDesc
 
 ```java
 @Test
-    public void testWrapper9(){
-        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
-        //条件
-        wrapper.eq("user_name","lisi")
-                .set("password","22222");
-        //update tb_user set password = ? where user_name = ?
-        userMapper.update(null,wrapper);
-    }
-    @Test
-    public void testWrapper10(){
-        UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+public void testWrapper9(){
+    UpdateWrapper<User> wrapper = new UpdateWrapper<>();
     //条件
-        wrapper.eq("user_name","lisi");
-    //update tb_user set password = ?,age = ? where user_name = ?
-        User user = new User();
-        user.setPassword("3333");
-        user.setAge(33);
-        userMapper.update(user,wrapper);
+    wrapper.eq("user_name","lisi")
+            .set("password","22222");
+    //update tb_user set password = ? where user_name = ?
+    userMapper.update(null,wrapper);
+}
+@Test
+public void testWrapper10(){
+    UpdateWrapper<User> wrapper = new UpdateWrapper<>();
+//条件
+    wrapper.eq("user_name","lisi");
+//update tb_user set password = ?,age = ? where user_name = ?
+    User user = new User();
+    user.setPassword("3333");
+    user.setAge(33);
+    userMapper.update(user,wrapper);
 }
 ```
 
-## 5 service 封装
+## 5. service 封装
 
 Mybatis-Plus 为了开发更加快捷，对业务层也进行了封装，直接提供了相关的接口和实现类。我们在进行业务层开发时，可以继承它提供的接口和实现类，使得编码更加高效
 
@@ -620,7 +620,7 @@ public class _UserServiceImpl extends ServiceImpl<UserMapper, User> implements _
 
 AutoGenerator 是 MyBatis-Plus 的代码生成器，通过 AutoGenerator 可以快速生成 Entity、Mapper、Mapper XML、Service、Controller 等各个模块的代码，极大的提升了开发效率。
 
-6.1 导入坐标
+### 6.1 导入坐标
 
 ```xml
 <parent>
@@ -681,7 +681,7 @@ AutoGenerator 是 MyBatis-Plus 的代码生成器，通过 AutoGenerator 可以�
 </dependencies>
 ```
 
-#### 6.2 执行main  方法
+### 6.2 执行main  方法
 
 ```java
 // 演示例子，执行 main 方法控制台输入模块表名回车自动生成对应项目目录中

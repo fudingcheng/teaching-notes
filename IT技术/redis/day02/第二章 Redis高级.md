@@ -88,7 +88,7 @@ setex k1 5 v1
 
 定时删除和惰性删除这两种方案都是走的极端，定期删除是一种折中方案。
 
-每隔一段时间，程序就会对数据库进行一次检查，删除里面的过期键。至于要删除多少过期键，以及要检查多少个数据库，则有算法决定。
+每隔一段时间，程序就会对数据库进行一次检查，删除里面的过期键。至于要删除多少过期键，以及要检查多少个数据库，则由算法决定。
 
 <img src="assets/过期删除流程.png" style="zoom:50%;" />
 
@@ -285,7 +285,7 @@ maxmemory-policy volatile-lru
 
 
 
-#### 2.2.1 主从复制的工作流程（三个阶段）
+#### 2.2.1 主从复制的工作流程
 
 ##### 2.2.1.1 阶段一：建立连接
 
@@ -413,8 +413,8 @@ redis-server –a password
 
 简化版：
 
-1. 主服务器讲RDB文件全量复制给从服务器
-2. 在进行全量复制时，如果主服务器接受了写数据的操作，讲写操作命令写入到复制积压缓冲区
+1. 主服务器将RDB文件全量复制给从服务器
+2. 在进行全量复制时，如果主服务器接受了写数据的操作，将写操作命令写入到复制积压缓冲区
 3. 完成全量复制后，主服务器再将复制缓冲区中新增加的写操作命令发送给从服务器
 
 ![img](assets/1.JPG)
@@ -439,7 +439,7 @@ repl-backlog-size ?mb
 
 1. 为避免slave进行全量复制、部分复制时服务器响应阻塞或数据不同步，建议关闭此期间的对外服务
 ```properties
-   slave-serve-stale-data yes|no
+slave-serve-stale-data yes|no
 ```
 
 2. 数据同步阶段，master发送给slave信息可以理解master是slave的一个客户端，主动向slave发送命令
@@ -690,7 +690,7 @@ slave-serve-stale-data	yes|no
 
 开启后仅响应info、slaveof等少数命令（慎用，除非对数据一致性要求很高）
 
-## 3.哨兵模式
+## 3. 哨兵模式
 
 ### 3.1 哨兵简介
 
@@ -721,7 +721,7 @@ slave-serve-stale-data	yes|no
   - master存活检测、master与slave运行情况检测
 
 
-- 通知（提醒）：当被监控的服务器出现问题时，向其他（哨兵间，客户端）发送通知
+- 通知（提醒）：当被监控的服务器出现问题时，向其他（哨兵，客户端）发送通知
 
 
 - 自动故障转移：断开master与slave连接，选取一个slave作为master，将其他slave连接新的master，并告知客户端新的服务器地址
@@ -861,7 +861,7 @@ Redis Sentinel进行领导者选举的大致思路：
 
 ##### 3）故障转移
 
-1. Sentinel领导者节点会对第一步选出来的从节点执行slaveof no one命令让其成为主节点。
+1. Sentinel领导者节点会对上一步选出来的从节点执行slaveof no one命令让其成为主节点。
 2. Sentinel领导者节点会向剩余的从节点发送命令，让它们成为新主节点的从节点，复制规则和parallel-syncs参数有关
 3. Sentinel节点集合会将原来的主节点更新为从节点，并保持着对其关注，当其恢复后命令它去复制新的主节点。
 
@@ -1037,7 +1037,7 @@ redis-cli --cluster reshard new-master-host:new-master:port --cluster-from src- 
 redis-cli --cluster reshard src-master-host:src-master-port --cluster-from src-  master-id --cluster-to target-master-id --cluster-slots slots --cluster-yes
 ```
 
-## 5.企业级解决方案
+## 5. 企业级解决方案
 
 ### 5.1 缓存预热
 
@@ -1272,8 +1272,6 @@ redis中的监控指标如下：
 >```properties
 >rdb_changes_since_last_save
 >```
-
-
 
 - 错误指标：Error
 
