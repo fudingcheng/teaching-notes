@@ -1520,7 +1520,7 @@ public List<UserInfo> queryUserInfoList(QueryWrapper queryWrapper) {
 }
 ~~~
 
-### 3.6、测试
+### 3.6 测试
 
 ![1567091733478](assets/1567091733478.png)
 
@@ -1888,7 +1888,7 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice {
 
 到目前为止，缓存逻辑添加完成。
 
-## 4. 整合测试
+## 5. 整合测试
 
 将资料中的app-debug-004.apk进行安装，并且修改服务地址进行测试。
 
@@ -1901,18 +1901,4 @@ public class MyResponseBodyAdvice implements ResponseBodyAdvice {
 接下来，进行登录测试：
 
  ![1567159551924](assets/1567159551924.png)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

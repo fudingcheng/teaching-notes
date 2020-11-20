@@ -1722,6 +1722,7 @@ use admin
 db.createUser({ user: 'root', pwd: 'root', roles: [ { role: "userAdminAnyDatabase", db: "admin" } ] })
 
 #测试，发现是没有权限操作的
+> mongo
 > show dbs
 2020-10-20T09:09:15.543+0000 E QUERY    [js] Error: listDatabases failed:{
         "ok" : 0,
