@@ -451,8 +451,13 @@ public class HuanXinController {
 
 消息内容：
 
-~~~shell
-{"userId": "1","nickname":"黑马小妹","strangerQuestion": "你喜欢去看蔚蓝的大海还是去爬巍峨的高山？","reply": "我喜欢秋天的落叶，夏天的泉水，冬天的雪地，只要有你一切皆可~"}
+~~~json
+{
+ "userId": "1",
+ "nickname":"黑马小妹",
+ "strangerQuestion": "你喜欢去看蔚蓝的大海还是去爬巍峨的高山？",
+ "reply": "我喜欢秋天的落叶，夏天的泉水，冬天的雪地，只要有你一切皆可~"
+}
 ~~~
 
  ![1570853459084](assets/1570853459084.png)
@@ -809,6 +814,7 @@ public class IMService {
         users.setUserId(user.getId());
         users.setFriendId(userId);
 
+        // 添加联系人信息到MongoDB
         String id = this.usersApi.saveUsers(users);
 
         if (StringUtils.isNotEmpty(id)) {
@@ -816,7 +822,7 @@ public class IMService {
             try {
                 String targetUrl = url + "/user/huanxin/contacts/" + users.getUserId() + "/" + users.getFriendId();
                 ResponseEntity<Void> responseEntity = this.restTemplate.postForEntity(targetUrl, null, Void.class);
-                if (responseEntity.getStatusCode().is2xxSuccessful()) {
+                if (responseEntity.getStatusCode().isSuccessful()) {
                     return true;
                 }
             } catch (Exception e) {
