@@ -468,13 +468,13 @@ public class MovementsService {
 QuanZiApi：
 
 ~~~java
-    /**
-     * 根据id查询动态
-     *
-     * @param id
-     * @return
-     */
-    Publish queryPublishById(String id);
+/**
+ * 根据id查询动态
+ *
+ * @param id
+ * @return
+ */
+Publish queryPublishById(String id);
 ~~~
 
 #### 1.3.2 dubbo接口实现
@@ -482,10 +482,10 @@ QuanZiApi：
 QuanZiApiImpl：
 
 ~~~java
-    @Override
-    public Publish queryPublishById(String id) {
-        return this.mongoTemplate.findById(new ObjectId(id), Publish.class);
-    }
+@Override
+public Publish queryPublishById(String id) {
+    return this.mongoTemplate.findById(new ObjectId(id), Publish.class);
+}
 ~~~
 
 #### 1.3.3 定义服务接口
@@ -610,13 +610,13 @@ public PageInfo<Comment> queryCommentList(String publishId, Integer page, Intege
             .where("publishId").is(new ObjectId(publishId))
             .and("commentType").is(2)).with(pageRequest);
 
-    //查询时间线表
-    List<Comment> timeLineList = this.mongoTemplate.find(query, Comment.class);
+    //查询评论表
+    List<Comment> commentList = this.mongoTemplate.find(query, Comment.class);
 
     PageInfo<Comment> pageInfo = new PageInfo<>();
     pageInfo.setPageNum(page);
     pageInfo.setPageSize(pageSize);
-    pageInfo.setRecords(timeLineList);
+    pageInfo.setRecords(commentList);
     pageInfo.setTotal(0); //不提供总数
     return pageInfo;
 }
@@ -1067,10 +1067,9 @@ public class TestFastDFS {
         }
     }
 }
-
 ~~~
 
-## 5. 布小视频
+## 5. 发布小视频
 
 ### 5.1 编写pojo
 
@@ -1643,7 +1642,6 @@ public class FollowUser implements java.io.Serializable{
     private Long followUserId; //关注的用户id
     private Long created; //关注时间
 }
-
 ~~~
 
 ~~~java
@@ -1690,7 +1688,6 @@ public interface VideoApi {
     Boolean disFollowUser(Long userId, Long followUserId);
 
 }
-
 ~~~
 
 接口实现：
