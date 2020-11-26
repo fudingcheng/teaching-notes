@@ -7,7 +7,7 @@
 - 实现环信的用户体系集成
 - 实现添加联系人、联系人列表功能
 - 实现点赞列表
-- 实现评论列表
+- 现评论列表
 - 实现喜欢列表
 - 实现公告列表
 
@@ -314,7 +314,6 @@ public class HuanXinUser {
     private String password;
 
 }
-
 ~~~
 
 

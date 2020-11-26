@@ -1755,7 +1755,6 @@ switched to db tanhua
 WriteResult({ "nInserted" : 1 })
 > db.user.find()
 { "_id" : ObjectId("5f8eb2726e0de0aa9517afd3"), "id" : 1, "username" : "zhangsan", "age" : 20 }
-
 ~~~
 
 资料中提供的Centos7中的MongoDB的认证信息：
