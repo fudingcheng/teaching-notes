@@ -227,8 +227,6 @@ MyBatis可以使用第三方的插件来对功能进行扩展，分页助手Page
 ~~~xml
 <!-- 注意：分页助手的插件  配置在通用mapper之前 -->
 <plugin interceptor="com.github.pagehelper.PageHelper">
-    <!-- 指定方言 -->
-    <property name="dialect" value="mysql"/>
 </plugin>
 ~~~
 
