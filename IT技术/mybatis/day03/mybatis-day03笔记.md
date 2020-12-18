@@ -186,13 +186,13 @@
 
 ### 1.2.2  一对一
 
-#### 2.2.1 模型
+#### 1）模型
 
 一对一查询的需求：查询一个用户信息，与此同时查询出该用户对应的身份证信息
 
 ![1590942011460](img/1590942011460.png)
 
-#### 2.2.2 语句
+#### 2）语句
 
 对应的sql语句：
 
@@ -200,8 +200,6 @@
 SELECT * FROM card；
 SELECT * FROM person WHERE id=#{id};
 ```
-
-##### 
 
 ##### 2.2.3 创建PersonMapper接口
 
@@ -289,15 +287,15 @@ public class Test01 {
 
 
 
-#### 2.3 一对多查询
+### 1.2.3 一对多
 
-##### 2.3.1 一对多查询的模型
+#### 1）模型
 
 一对多查询的需求：查询一个课程，与此同时查询出该该课程对应的学生信息
 
 ![1590942772892](img/1590942772892.png)
 
-##### 2.3.2 一对多查询的语句
+#### 2）语句
 
 对应的sql语句：
 
@@ -307,9 +305,7 @@ SELECT * FROM classes
 SELECT * FROM student WHERE cid=#{cid}
 ```
 
-##### 
-
-##### 2.3.3 创建StudentMapper接口
+#### 3）接口
 
 ```java
 public interface StudentMapper {
@@ -320,7 +316,7 @@ public interface StudentMapper {
 
 ```
 
-##### 2.3.4 使用注解配置Mapper
+#### 4）注解配置Mapper
 
 ```java
 public interface ClassesMapper {
@@ -344,7 +340,7 @@ public interface ClassesMapper {
 }
 ```
 
-##### 2.3.5 测试类
+#### 5）测试类
 
 ```java
 public class Test01 {
@@ -383,31 +379,15 @@ public class Test01 {
 
 ```
 
-##### 2.3.6 一对多配置总结
+### 1.2.4  多对多查询
 
-~~~xml-dtd
-@Results：封装映射关系的父注解。
-	Result[] value()：定义了 Result 数组
-@Result：封装映射关系的子注解。
-	column 属性：查询出的表中字段名称
-	property 属性：实体对象中的属性名称
-	javaType 属性：被包含对象的数据类型
-	many 属性：一对多查询固定属性
-@Many：一对多查询的注解。
-	select 属性：指定调用某个接口中的方法
-~~~
-
-
-
-#### 2.4  多对多查询
-
-##### 2.4.1 多对多查询的模型
+#### 1）模型
 
 多对多查询的需求：查询学生以及所对应的课程信息
 
 ![1590943489827](img/1590943489827.png)
 
-##### 2.4.2 多对多查询的语句
+#### 2）语句
 
 对应的sql语句：
 
@@ -418,7 +398,7 @@ SELECT c.id,c.name FROM stu_cr sc,course c WHERE sc.cid=c.id AND sc.sid=#{id}
 
 
 
-##### 2.4.3  添加CourseMapper 接口方法
+#### 3）接口
 
 ```java
 public interface CourseMapper {
@@ -429,7 +409,7 @@ public interface CourseMapper {
 
 ```
 
-##### 2.4.4 使用注解配置Mapper
+#### 4）配置Mapper
 
 ```java
 public interface StudentMapper {
@@ -455,7 +435,7 @@ public interface StudentMapper {
 
 ```
 
-##### 2.4.5 测试类
+#### 5）测试类
 
 ```java
 public class Test01 {
@@ -493,23 +473,9 @@ public class Test01 {
 }
 ```
 
-##### 2.4.6 多对多配置总结
-
-~~~xml-dtd
-@Results：封装映射关系的父注解。
-	Result[] value()：定义了 Result 数组
-@Result：封装映射关系的子注解。
-	column 属性：查询出的表中字段名称
-	property 属性：实体对象中的属性名称
-	javaType 属性：被包含对象的数据类型
-	many 属性：一对多查询固定属性
-@Many：一对多查询的注解。
-	select 属性：指定调用某个接口中的方法
-~~~
-
 # 2. 构建sql
 
-## 2.1 SQL 构建对象介绍    
+## 2.1 SQL 构建对象介绍
 
 * 我们之前通过注解开发时，相关 SQL 语句都是自己直接拼写的。一些关键字写起来比较麻烦、而且容易出错。 
 *  MyBatis 给我们提供了 org.apache.ibatis.jdbc.SQL 功能类，专门用于构建 SQL 语句    
