@@ -333,7 +333,7 @@ document.write(typeof(age)); // number
 - 数据类型：boolean、null、undefined、number、string、bigint
 - typeof 关键字：用于判断变量的数据类型 
 - 运算符：算数、赋值、逻辑、比较、三元运算符 
--  流程控制和循环语句：if、switch、for、while
+-  # 流程控制和循环语句：if、switch、for、while
 - 数组：数据类型和长度没有限制，let 数组名 = [长度/元素]
 -  函数：类似方法，抽取代码，提高复用性
 
