@@ -1,0 +1,39 @@
+缓存首页数据的业务说明：
+
+	1. 请求如果是POST的话，请求的数据在请求体中，获取POST数据时用request.getInputStream()
+
+	2. request.getInputStream()获取请求体中数据库，该方法只能获取一次
+
+	3. 如果在interceptor中调用了request.getInputStream()，那么请求放行到Controller中就不能再从request.getInputStream()获取数据了。
+
+	4. 如果为了解决第【3】点的问题，即在Controller中依然要获取request.getInputStream()中的数据，那么就需要对Request对象进行包装
+
+	5. request包装类的办法就是在Request创建字节数组，存储request.getInputStream()中的数据
+
+	6. 在Filter中进行request包装
+
+	7. filter与intercept的区别
+		* 相同点：都可以拦截请求
+		* 不同点：
+			** filter：
+				1. 是应用服务器（Tomcat）中的组件
+				2. 拦截在前
+			** intercept：
+				1. 是框架的组件（SpringMVC）
+				2. 拦截在后
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			
+			

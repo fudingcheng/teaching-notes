@@ -1,0 +1,20 @@
+server:
+  port: 8761
+
+# eureka 配置
+# eureka 一共有4部分 配置
+# 1. dashboard:eureka的web控制台配置
+# 2. server:eureka的服务端配置
+# 3. client:eureka的客户端配置
+# 4. instance:eureka的实例配置
+
+
+eureka:
+  instance:
+    hostname: localhost # 主机名
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}/eureka # eureka服务端地址，将来客户端使用该地址和eureka进行通信
+
+    register-with-eureka: false # 是否将自己的路径 注册到eureka上。eureka server 不需要的，eureka provider client 需要
+    fetch-registry: false # 是否需要从eureka中抓取路径。eureka server 不需要的，eureka consumer client 需要

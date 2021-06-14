@@ -1,0 +1,37 @@
+server:
+  port: 9527
+
+spring:
+  application:
+    name: config-server
+  # spring cloud config
+  cloud:
+    config:
+      server:
+        # git 的 远程仓库地址
+        git:
+          uri: https://gitee.com/itheima_cch/itheima-configs.git
+      label: master # 分支配置
+  #配置rabbitmq信息
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+    virtual-host: /
+
+
+# 将自己注册到eureka中
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+# 暴露bus的刷新端点
+management:
+  endpoints:
+    web:
+      exposure:
+        include: 'bus-refresh'

@@ -1,0 +1,12 @@
+server:
+  port: 8000
+
+
+
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr:  127.0.0.1:8848 # 配置nacos 服务端地址
+  application:
+    name: nacos-provider # 服务名称
