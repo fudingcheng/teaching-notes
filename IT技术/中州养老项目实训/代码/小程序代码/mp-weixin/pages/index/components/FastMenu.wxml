@@ -1,0 +1,1 @@
+<view class="fastMenu"><view class="item" bindtap="{{a}}"><view class="menuIcon"><icon class="introduce"></icon></view><view>养老院介绍</view></view><view class="item"><view class="menuIcon"><icon class="serve"></icon></view><view>我的订单</view></view><view class="item"><view class="menuIcon"><icon class="bill"></icon></view><view>我的账单 </view></view></view>

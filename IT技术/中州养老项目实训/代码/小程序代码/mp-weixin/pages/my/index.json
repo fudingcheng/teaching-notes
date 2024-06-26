@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "我的",
+  "backgroundColor": "#f4f3f7",
+  "enablePullDownRefresh": false,
+  "usingComponents": {
+    "fast-menu": "./components/FastMenu",
+    "my-menu": "./components/MyMenu",
+    "delete-popup": "../../components/Operate/index"
+  }
+}

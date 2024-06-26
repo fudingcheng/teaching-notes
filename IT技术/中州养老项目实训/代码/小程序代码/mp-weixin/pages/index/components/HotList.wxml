@@ -1,0 +1,1 @@
+<view class="hotHouse"><view class="tit">热门房型</view><view class="hotList"><view wx:for="{{a}}" wx:for-item="item" wx:key="d" class="item"><view class="img"><image src="{{item.a}}"></image><view class="title">{{item.b}}</view></view><view class="text">{{item.c}}</view></view></view></view>

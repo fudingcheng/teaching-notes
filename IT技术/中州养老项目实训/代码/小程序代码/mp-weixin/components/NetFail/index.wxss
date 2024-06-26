@@ -1,0 +1,27 @@
+/* 水平间距 */
+/* 水平间距 */
+.net-fail image.data-v-44cb6724 {
+  width: 320rpx;
+  height: 290rpx;
+  margin: 0 auto;
+  display: block;
+  margin-top: 440rpx;
+}
+.net-fail .tips.data-v-44cb6724 {
+  text-align: center;
+  font-size: 28rpx;
+  color: #818181;
+  margin-top: 40rpx;
+}
+.net-fail .btn.data-v-44cb6724 {
+  width: 240rpx;
+  height: 88rpx;
+  line-height: 88rpx;
+  text-align: center;
+  color: white;
+  font-size: 30rpx;
+  background-color: var(--essential-color-red);
+  border-radius: 44rpx;
+  margin: 0 auto;
+  margin-top: 64rpx;
+}

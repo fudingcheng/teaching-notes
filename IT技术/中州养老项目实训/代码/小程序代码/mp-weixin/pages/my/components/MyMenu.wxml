@@ -1,0 +1,1 @@
+<view class="myMenu"><view class="item" bindtap="{{a}}"><view>我的预约</view><icon class="selectIcon"></icon></view><view class="item" bindtap="{{b}}"><view>我的合同</view><icon class="selectIcon"></icon></view><view class="item" bindtap="{{c}}"><view>我的账单</view><icon class="selectIcon"></icon></view></view>

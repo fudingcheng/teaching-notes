@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "中州养老",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "phone": "../../components/uni-phone/index",
+    "fast-menu": "./components/FastMenu",
+    "hot-list": "./components/HotList",
+    "appointment": "./components/Appointment"
+  }
+}

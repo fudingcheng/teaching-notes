@@ -1,0 +1,11 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "服务详情",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {
+    "look-popup": "../../components/Binding/index",
+    "family-view": "../../components/FamilyView/index",
+    "picker-view": "./components/PickerView"
+  }
+}

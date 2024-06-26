@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.zzyl.mapper.RoomTypeMapper">
+    <!--根据状态查询所有房型-->
+    <select id="select" resultType="com.itheima.zzyl.pojo.RoomType">
+        select * from room_type where status=#{status}
+    </select>
+</mapper>

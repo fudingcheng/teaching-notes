@@ -1,0 +1,39 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/service/index",
+    "pages/service/details",
+    "pages/my/index",
+    "components/Foot/index",
+    "components/uni-phone/index"
+  ],
+  "subPackages": [
+    {
+      "root": "subPages",
+      "pages": [
+        "appointment/index",
+        "appointment/components/PickerView",
+        "appointment/list/index",
+        "introduce/index",
+        "search/index"
+      ]
+    }
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "中州养老",
+    "backgroundColor": "#F8F8F8",
+    "onReachBottomDistance": 50,
+    "enablePullDownRefresh": true
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "123"
+    }
+  },
+  "usingComponents": {
+    "nav-bar": "/components/Navbar/index",
+    "net-fail": "/components/NetFail/index",
+    "uni-footer": "/components/Foot/index"
+  }
+}

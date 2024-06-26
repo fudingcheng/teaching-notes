@@ -1,0 +1,16 @@
+#修改服务器端口号
+server:
+  port: 9995
+
+#数据源配置
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/zzyl_user_client?serverTimezone=Asia/Shanghai
+    username: root
+    password: root
+
+#mybatis配置
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true

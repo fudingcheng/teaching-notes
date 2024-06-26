@@ -1,0 +1,1 @@
+<uni-popup u-s="{{['d']}}" u-r="popup" class="uniPopupBox r" u-i="77ffc297-0" bind:__l="__l"><view class="{{['popup-content', b && 'popup-height']}}"><view class="popupCon"><view class="tip">您暂时没有绑定的家人</view></view><view class="popupFoot" bindtap="{{a}}">去绑定</view></view></uni-popup>

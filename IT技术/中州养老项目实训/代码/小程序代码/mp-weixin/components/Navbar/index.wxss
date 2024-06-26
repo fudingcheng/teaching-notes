@@ -1,0 +1,27 @@
+/* 水平间距 */
+/* 水平间距 */
+.navBar.data-v-e4fdf528 {
+  position: relative;
+  background-color: white;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  z-index: 3;
+}
+.navBar .title.data-v-e4fdf528 {
+  font-weight: bold;
+  font-size: 32rpx;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 66rpx;
+}
+.navBar image.data-v-e4fdf528 {
+  width: 40rpx;
+  height: 40rpx;
+  position: absolute;
+  left: 26rpx;
+  bottom: 34rpx;
+}

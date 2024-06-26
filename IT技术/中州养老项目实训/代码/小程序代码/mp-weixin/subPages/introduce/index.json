@@ -1,0 +1,9 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "养老院介绍",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {
+    "phone": "../../components/uni-phone/index"
+  }
+}

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.zzyl.mapper.NursingProjectMapper">
+    <!--查询总记录条数-->
+    <select id="count" resultType="long">
+        select count(*) from nursing_project
+    </select>
+
+    <!--查询指定页数据-->
+    <select id="findPage" resultType="com.itheima.zzyl.pojo.NursingProject">
+        select * from nursing_project order by order_no limit #{start},#{pageSize}
+    </select>
+
+    <!--根据ID查询-->
+    <select id="selectById" resultType="com.itheima.zzyl.pojo.NursingProject">
+        select * from nursing_project where id = #{id}
+    </select>
+</mapper>

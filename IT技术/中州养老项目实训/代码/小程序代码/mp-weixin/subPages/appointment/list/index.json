@@ -1,0 +1,10 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "我的预约",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {
+    "cancel-popup": "./components/CancelPopup",
+    "list": "./components/list"
+  }
+}

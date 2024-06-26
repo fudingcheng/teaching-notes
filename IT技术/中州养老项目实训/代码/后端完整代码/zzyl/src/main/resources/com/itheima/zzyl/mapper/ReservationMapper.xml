@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itheima.zzyl.mapper.ReservationMapper">
+    <!--查询总记录数-->
+    <select id="count" resultType="java.lang.Long">
+        select count(*) from reservation where create_by=#{userId}
+        <if test="status!=null">and status=#{status}</if>
+    </select>
+
+    <!--查询当前页数据-->
+    <select id="findPage" resultType="com.itheima.zzyl.pojo.Reservation">
+        select * from reservation where create_by=#{userId}  <if test="status!=null">and status=#{status}</if> limit
+        #{start},#{pageSize}
+    </select>
+
+    <!--新增预约-->
+    <insert id="insert">
+        insert into reservation(name, mobile, visitor, time, type, status, create_time, update_time, create_by,
+                                update_by)
+        values (#{name}, #{mobile}, #{visitor}, #{time}, #{type}, #{status}, #{createTime}, #{updateTime}, #{userId},
+                #{userId})
+    </insert>
+
+    <!--修改预约状态-->
+    <update id="updateStatus">
+        update reservation set status=2,update_time=#{updateTime},update_by=#{userId} where id=#{id}
+    </update>
+</mapper>

@@ -1,0 +1,11 @@
+
+.picker-view.data-v-83a8e59d {
+		width: 750rpx;
+		height: 600rpx;
+		margin-top: 20rpx;
+		padding-bottom: 120rpx;
+}
+.item.data-v-83a8e59d {
+		line-height: 100rpx;
+		text-align: center;
+}

@@ -1,0 +1,12 @@
+{
+  "navigationStyle": "custom",
+  "navigationBarTitleText": "参观预约",
+  "enablePullDownRefresh": false,
+  "backgroundColor": "#f4f3f7",
+  "usingComponents": {
+    "visit-app": "./components/VisitApp",
+    "picker-view": "./components/PickerView",
+    "family-view": "../../components/FamilyView/index",
+    "time-select": "./components/TimeSelect"
+  }
+}

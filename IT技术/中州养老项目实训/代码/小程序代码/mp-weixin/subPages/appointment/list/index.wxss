@@ -1,0 +1,31 @@
+/* 水平间距 */
+/* 水平间距 */
+.data-v-99bb77d9:root {
+--essential-color-red:#FE6A3D;
+	--assist-color-green:#1DC779;
+	--assist-color-orange:#FFB302; 
+	--assist-color-error:#F56C6C; 
+	
+	--neutral-color-main:#151515;
+	--neutral-color-border:#E5E4E4;
+	--neutral-color-font:#888888;
+	--neutral-color-segmentation:#EEEEEE;
+	--neutral-color-white:#FFFFFF;
+  --neutral-color-black:#000000;
+	--neutral-color-placeholder:#878787;
+	--neutral-color-background:#F3F4F7;
+  --neutral-color-line:#F4F4F4;
+	--neutral-color-btn:#0F0F0F;
+	--neutral-color-btn-background:#E6E6E6;
+	--font-size-17:34rpx;
+	--font-size-16:32rpx;
+	--font-size-15:30rpx;
+	--font-size-14:28rpx;
+	--font-size-13:26rpx;
+	--font-size-12:24rpx;
+	--font-size-11:22rpx;
+	--font-size-10:20rpx;
+}
+.appoBox.itemListBox.data-v-99bb77d9 .timeList .item {
+  padding: 40rpx;
+}
